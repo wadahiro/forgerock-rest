@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -116,7 +117,7 @@ public final class HttpContext extends AbstractContext implements ClientContext 
                 new Factory<Map<String, List<String>>>() {
                     @Override
                     public Map<String, List<String>> newInstance() {
-                        final Map<String, List<String>> result = new LinkedHashMap<String, List<String>>();
+                        final Map<String, List<String>> result = new TreeMap<String, List<String>>(String.CASE_INSENSITIVE_ORDER);
                         final Enumeration<String> i = req.getHeaderNames();
                         while (i.hasMoreElements()) {
                             final String name = i.nextElement();
