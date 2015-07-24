@@ -54,4 +54,10 @@ Note: waiting on https://jira.codehaus.org/browse/MCLIRR-62 to be resolved to av
         <method>java.lang.String getKnownName()</method>
         <justification>CREST-186 - Exposes the MD of JWSAlgorithms</justification>
     </difference>
+    <difference>
+        <className>org/forgerock/json/jose/jws/handlers/SigningHandler</className>
+        <differenceType>7012</differenceType>
+        <method>byte[] sign(org.forgerock.json.jose.jws.JwsAlgorithm, byte[])</method>
+        <justification>CREST-301 - Essential fix for JWE spec compliance</justification>
+    </difference>
 </differences>
