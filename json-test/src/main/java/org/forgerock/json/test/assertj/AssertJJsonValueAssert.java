@@ -17,6 +17,13 @@
 package org.forgerock.json.test.assertj;
 
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.api.AbstractBooleanAssert;
+import org.assertj.core.api.AbstractCharSequenceAssert;
+import org.assertj.core.api.AbstractDoubleAssert;
+import org.assertj.core.api.AbstractIntegerAssert;
+import org.assertj.core.api.AbstractListAssert;
+import org.assertj.core.api.AbstractLongAssert;
+import org.assertj.core.api.AbstractMapAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.BooleanAssert;
 import org.assertj.core.api.Condition;
@@ -172,7 +179,7 @@ public class AssertJJsonValueAssert {
          * @param path The {@link JsonPointer} path to the expected value.
          * @return This {@link BooleanAssert} instance.
          */
-        public BooleanAssert booleanAt(String path) {
+        public AbstractBooleanAssert<?> booleanAt(String path) {
             JsonValue child = actual.get(new JsonPointer(path));
             Assertions.assertThat(child.isBoolean()).isTrue();
             return Assertions.assertThat(child.asBoolean());
@@ -207,7 +214,7 @@ public class AssertJJsonValueAssert {
          * @param path The {@link JsonPointer} path to the expected value.
          * @return This {@link StringAssert} instance.
          */
-        public StringAssert stringAt(String path) {
+        public AbstractCharSequenceAssert<?, ?> stringAt(String path) {
             JsonValue child = actual.get(new JsonPointer(path));
             Assertions.assertThat(child.isString()).isTrue();
             return Assertions.assertThat(child.asString());
@@ -242,7 +249,7 @@ public class AssertJJsonValueAssert {
          * @param path The {@link JsonPointer} path to the expected value.
          * @return This {@link IntegerAssert} instance.
          */
-        public IntegerAssert integerAt(String path) {
+        public AbstractIntegerAssert<?> integerAt(String path) {
             JsonValue child = actual.get(new JsonPointer(path));
             Assertions.assertThat(child.isNumber()).isTrue();
             return Assertions.assertThat(child.asInteger());
@@ -266,7 +273,7 @@ public class AssertJJsonValueAssert {
          * @param path The {@link JsonPointer} path to the expected value.
          * @return This {@link LongAssert} instance.
          */
-        public LongAssert longAt(String path) {
+        public AbstractLongAssert<?> longAt(String path) {
             JsonValue child = actual.get(new JsonPointer(path));
             Assertions.assertThat(child.isNumber()).isTrue();
             return Assertions.assertThat(child.asLong());
@@ -290,7 +297,7 @@ public class AssertJJsonValueAssert {
          * @param path The {@link JsonPointer} path to the expected value.
          * @return This {@link DoubleAssert} instance.
          */
-        public DoubleAssert doubleAt(String path) {
+        public AbstractDoubleAssert<?> doubleAt(String path) {
             JsonValue child = actual.get(new JsonPointer(path));
             Assertions.assertThat(child.isNumber()).isTrue();
             return Assertions.assertThat(child.asDouble());
@@ -306,7 +313,7 @@ public class AssertJJsonValueAssert {
 
     public static class ObjectJsonValueAssert extends AbstractJsonValueAssert<ObjectJsonValueAssert> {
 
-        private MapAssert<String, Object> mapAssert;
+        private AbstractMapAssert<?, ?, String, Object> mapAssert;
 
         private ObjectJsonValueAssert(JsonValue value) {
             super(ObjectJsonValueAssert.class, value);
@@ -406,7 +413,7 @@ public class AssertJJsonValueAssert {
     }
 
     public static class ArrayJsonValueAssert extends AbstractJsonValueAssert<ArrayJsonValueAssert> {
-        private ListAssert<Object> listAssert;
+        private AbstractListAssert<?, ?, Object> listAssert;
 
         private ArrayJsonValueAssert(JsonValue value) {
             super(ArrayJsonValueAssert.class, value);
