@@ -590,7 +590,7 @@ public final class Resources {
         } else {
             final Map<String, Object> filtered = new LinkedHashMap<String, Object>(fields.size());
             for (final JsonPointer field : fields) {
-                if (field.isEmpty()) {
+                if (field.isEmpty() || field.equals(new JsonPointer("*"))) {
                     // Special case - copy resource fields (assumes Map).
                     filtered.putAll(resource.asMap());
                 } else {
@@ -624,7 +624,10 @@ public final class Resources {
     public static Resource filterResource(final Resource resource,
             final Collection<JsonPointer> fields) {
         final JsonValue unfiltered = resource.getContent();
-        final JsonValue filtered = filterResource(unfiltered, fields);
+        final Collection<JsonPointer> filterFields = resource.hasFields()
+        		? resource.getFields()
+        	    : fields;
+        final JsonValue filtered = filterResource(unfiltered, filterFields);
         if (filtered == unfiltered) {
             return resource; // Unchanged.
         } else {
