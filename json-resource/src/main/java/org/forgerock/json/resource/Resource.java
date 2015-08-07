@@ -17,6 +17,7 @@
 package org.forgerock.json.resource;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -140,7 +141,7 @@ public final class Resource {
      *         after field filtering has occurred.
      */
     public List<JsonPointer> getFields() {
-        return fields;
+        return Collections.unmodifiableList(fields);
     }
     
     /**
