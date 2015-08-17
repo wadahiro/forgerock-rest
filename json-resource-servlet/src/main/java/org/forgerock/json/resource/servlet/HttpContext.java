@@ -11,7 +11,7 @@
  * Header, with the fields enclosed by brackets [] replaced by your own identifying
  * information: "Portions copyright [year] [name of copyright owner]".
  *
- * Copyright 2012-2014 ForgeRock AS.
+ * Copyright 2012-2015 ForgeRock AS.
  */
 package org.forgerock.json.resource.servlet;
 
@@ -170,7 +170,7 @@ public final class HttpContext extends AbstractContext implements ClientContext 
      *         in the request.
      */
     public List<String> getHeader(final String name) {
-        final List<String> header = data.get(ATTR_HEADERS).get(name).asList(String.class);
+        final List<String> header = headers.get(name);
         return Collections.unmodifiableList(header != null ? header : Collections.<String> emptyList());
     }
 
@@ -230,7 +230,7 @@ public final class HttpContext extends AbstractContext implements ClientContext 
      *         present in the request.
      */
     public List<String> getParameter(final String name) {
-        final List<String> parameter = data.get(ATTR_PARAMETERS).get(name).asList(String.class);
+        final List<String> parameter = parameters.get(name);
         return Collections.unmodifiableList(parameter != null ? parameter : Collections.<String> emptyList());
     }
 
