@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.forgerock.json.fluent.JsonPointer;
 import org.forgerock.json.fluent.JsonValue;
+import org.forgerock.util.i18n.PreferredLocales;
 
 /**
  * Common attributes of all JSON resource requests.
@@ -233,4 +234,17 @@ public interface Request {
      * @return this request as a JsonValue
      */
     JsonValue toJsonValue();
+
+    /**
+     * Get the locale preference for the request.
+     * @return The {@code PreferredLocales} instance for the request.
+     */
+    PreferredLocales getPreferredLocales();
+
+    /**
+     * Set the locale preference for the request.
+     * @param preferredLocales The {@code PreferredLocales} instance for the request.
+     * @return This request.
+     */
+    Request setPreferredLocales(PreferredLocales preferredLocales);
 }
