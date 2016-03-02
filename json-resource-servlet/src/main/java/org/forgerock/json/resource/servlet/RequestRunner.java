@@ -11,7 +11,7 @@
  * Header, with the fields enclosed by brackets [] replaced by your own identifying
  * information: "Portions copyright [year] [name of copyright owner]".
  *
- * Copyright 2012-2014 ForgeRock AS.
+ * Copyright 2012-2016 ForgeRock AS.
  */
 package org.forgerock.json.resource.servlet;
 
@@ -430,7 +430,7 @@ final class RequestRunner implements ResultHandler<Connection>, RequestVisitor<V
             AdviceContext adviceContext = context.asContext(AdviceContext.class);
             for (Map.Entry<String, List<String>> entry : adviceContext.getAdvices().entrySet()) {
                 for (String value : entry.getValue()) {
-                    httpResponse.setHeader(entry.getKey(), value);
+                    httpResponse.addHeader(entry.getKey(), value);
                 }
             }
         }
