@@ -11,10 +11,12 @@
  * Header, with the fields enclosed by brackets [] replaced by your own identifying
  * information: "Portions copyright [year] [name of copyright owner]".
  *
- * Copyright 2013-2014 ForgeRock Inc.
+ * Copyright 2013-2016 ForgeRock Inc.
  */
 
 package org.forgerock.json.jose.utils;
+
+import static org.forgerock.util.Utils.closeSilently;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,6 +38,7 @@ import java.security.cert.X509Certificate;
  */
 public class KeystoreManager {
 
+    private static final String PKCS11 = "PKCS11";
     private KeyStore keyStore = null;
 
     /**
@@ -60,12 +63,20 @@ public class KeystoreManager {
     private void loadKeyStore(String keyStoreType, String keyStoreFile, String keyStorePassword) {
         try {
             keyStore = KeyStore.getInstance(keyStoreType);
-            if (keyStoreFile == null || keyStoreFile.isEmpty()) {
-                throw new KeystoreManagerException("mapPk2Cert.JKSKeyProvider: KeyStore FileName is null, "
-                        + "unable to establish Mapping Public Keys to Certificates!");
+            if (PKCS11.equalsIgnoreCase(keyStoreType)) {
+                keyStore.load(null, keyStorePassword.toCharArray());
+            } else {
+                if (keyStoreFile == null || keyStoreFile.isEmpty()) {
+                    throw new KeystoreManagerException("mapPk2Cert.JKSKeyProvider: KeyStore FileName is null, "
+                            + "unable to establish Mapping Public Keys to Certificates!");
+                }
+                FileInputStream fis = new FileInputStream(keyStoreFile);
+                try {
+                    keyStore.load(fis, keyStorePassword.toCharArray());
+                } finally {
+                    closeSilently(fis);
+                }
             }
-            FileInputStream fis = new FileInputStream(keyStoreFile);
-            keyStore.load(fis, keyStorePassword.toCharArray());
         } catch (KeyStoreException e) {
             throw new KeystoreManagerException(e);
         } catch (FileNotFoundException e) {
